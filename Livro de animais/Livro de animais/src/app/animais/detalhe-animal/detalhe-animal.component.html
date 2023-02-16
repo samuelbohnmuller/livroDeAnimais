@@ -1,0 +1,21 @@
+<div class="bg-white border" *ngIf="animal$ | async as animal">
+  <div class="row">
+    <div class="col-lg-8"> <!--12 col tem a página inteira, então com 2, usamos 2 terços da tela para o componente abaixo.-->
+      <app-animal [url]="animal.url" [descricao]="animal.description"></app-animal> <!--Mostro atributo da interface Animal em seus atributos(variável assíncrona animal tem os valores guardados pegos na API).-->
+    </div>
+    <div class="col-lg-4">
+      <small>
+        <p class="text-left break-word">{{animal.description}}</p>
+        <i (click)="curtir()" class="fa fa-heart-o fa-2x mr-2 pull-left">{{animal.likes}}</i>
+        <i class="fa fa-comment-o fa-2x mr-2 ml-2">{{animal.comments}}</i>
+        <i (click)="excluir()" class="fa fa-trash-o fa-2x pull-right"></i>
+      </small>
+
+      <app-comentarios [id]="animalId" *ngIf="animal.allowComments else warning"></app-comentarios> <!--id do animal(pego no componente de detalhe) passa para atributo id do componente de comentários(para se conectarem, id do animal e id do comentário). Se não tiver comentário, mostra template criado abaixo.-->
+      
+      <ng-template #warning> <!--Instancio o template através do nome warning em outra parte do HTML, como no aap-comentarios. ng-temlate é um template do angular criado no momento.-->
+        <p>Usuário não pode comentar a foto desse animal.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

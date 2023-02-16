@@ -1,0 +1,26 @@
+<h4 class="text-center">Registre seu animal</h4>
+
+<form class="form mt-2" [formGroup]="novoUsuarioForm" (submit)="cadastrar()"> <!--Indico formulário angular, com objeto que representa o modelo. Quando o formulário for submetido, chamará o método cadastrar.-->
+  <div class="form-group mt-2">
+    <input placeholder="e-mail" class="form-control" formControlName="email" /> <!--formControlName precisa ter o mesmo valor do novoUsuarioForm(objeto com os elementos que serão capturados no formulário.)-->
+    <app-mensagem *ngIf="novoUsuarioForm.get('email')?.errors?.['required'] && novoUsuarioForm.get('email')?.touched" mensagem="Email obrigatório"></app-mensagem> <!--Pego o atributo email do objeto se ele existir(?.) e aplico validações.-->
+    <app-mensagem *ngIf="novoUsuarioForm.get('email')?.errors?.['email'] && novoUsuarioForm.get('email')?.touched" mensagem="E-mail no formato errado"></app-mensagem>
+  </div>
+  <div class="form-group mt-2">
+    <input placeholder="Nome Completo" class="form-control" formControlName="fullName"/>
+    <app-mensagem *ngIf="novoUsuarioForm.get('fullName')?.errors && novoUsuarioForm.get('email')?.touched" mensagem="Nome incorreto"></app-mensagem>
+  </div>
+  <div class="form-group mt-2">
+    <input placeholder="Usuario" class="form-control" formControlName="userName"/>
+    <app-mensagem *ngIf="novoUsuarioForm.get('userName')?.errors?.['minusculo'] && novoUsuarioForm.get('userName')?.touched" mensagem="Usuário em letra minúscula"></app-mensagem>
+    <app-mensagem *ngIf="novoUsuarioForm.get('userName')?.errors?.['usuarioExistente']" mensagem="Usuário já existe"></app-mensagem>
+  </div>
+  <div class="form-group mt-2">
+    <input type="password" placeholder="Senha" class="form-control" formControlName="password"/>
+    <app-mensagem *ngIf="novoUsuarioForm.errors?.['senhaIgualUsuario']" mensagem="Senha deve ser diferente do usuário"></app-mensagem> <!-- Se o valor do atributo senhaIgualUsuario for true(usuário e senha forem iguais) mostrará mensagem. novoUsuarioForm.errors sem get(), pois para pegar validação do formulário inteiro.-->
+  </div>
+
+  <button class="btn btn-primary btn-block mt-2">Cadastrar</button>
+</form>
+
+<p>Não é usuário?<a [routerLink]="['']">Faça login</a></p> <!--Link que aponta para componente principal(vazio que leva pra home).-->

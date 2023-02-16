@@ -1,0 +1,13 @@
+<p class="text-center text-muted" *ngIf="!animais.length">Não há animais.</p> <!--Apresenta a mensagem se não houver animais(registros no array).-->
+
+<div class="row">
+  <div *ngFor="let animal of animais" class="col-4"> <!--3 cartões por coluna com mais colunas abaixo. Loop com link abaixo mostrando cada animal do array.-->
+    <a [routerLink]="['/animais', animal.id]"> <!--Vai para a página animais com o id do animal.-->
+      <app-cartao> <!--HTML de cartao com o ng-content recebe outro HTML dentro por projeção.-->
+        <app-animal [url]="animal.url" [descricao]="animal.description"></app-animal> <!--Instancio componente inteiro de nome app-animal no seletor do componente. Método url recebe sob () o valor que estiver no atributo url da interface Animais(vindos da API) e atributo descricao recebe o valor de description da API.-->
+          <i aria-hidden="true" class="fa fa-heart-o fa-1x mr-2">{{animal.likes}}</i> <!--Ícone(aria-hidden pois não pode ser lido por leitor de tela)-->
+          <i aria-hidden="true" class="fa fa-comment-o fa-1x mr-2 ml-2">{{animal.comments}}</i>
+      </app-cartao>
+    </a>
+  </div>
+</div>

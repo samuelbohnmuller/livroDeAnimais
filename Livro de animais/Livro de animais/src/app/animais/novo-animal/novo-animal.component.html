@@ -1,0 +1,35 @@
+<div class="container">
+  <form [formGroup]="formularioAnimal" class="row" (submit)="upload()"> <!--Evento de formulário do angular que captura os dados dos campos.-->
+    <div class="col-md-6 text-center">
+      <div class="form-group" *ngIf="!preview else previewImage"> <!--Se tiver a URL da foto, mostra a foto, se não tiver, mastra um botão para a pessoa clicar(variável !preview representa que não tem o preview da foto). previewImage trará outro componente.-->
+        <button type="button" (click)="fileInput.click()" class="btn btn-primary"><i class="fa fa-image fa-4x align-middle"></i></button>
+        <input #fileInput type="file" hidden formControlName="file" accept="image/*" (change)="gravaArquivo($event.target)"> <!--#fileInput é o nome do input, pois o botão será acossiado a ele. Não mostra na tela, o botão é que aciona o input. formControlName pega o valor de atributo no componente.--> <!--Aceita somente arquivos de imagem. Qualquer mudança na página, pega a URL.-->
+        <app-mensagem mensagem="Selecione a foto" *ngIf="!!formularioAnimal.get('file')?.errors?.['required']"></app-mensagem> <!--Se não tiver a foto.-->
+      </div>
+      <ng-template #previewImage>
+        <app-animal [url]="preview" title="Preview"></app-animal> <!--Componente apenas traz a imagem do animal.-->
+      </ng-template>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <textarea formControlName="description" class="form-control form-control-sm" placeholder="Descrição do animal"></textarea> <!--Mesmo noma do atributo da API, pois quando for exportar o valor do formulário, não será feita nenhuma conversão-->
+        <app-mensagem mensagem="Tamanho máximo do campo é 200 caracteres" *ngIf="!!formularioAnimal.get('description')?.errors?.['maxlength']"></app-mensagem>
+      </div>
+
+      <div class="form-group">
+        <label class="text-muted">Permite comentários <input type="checkbox" formControlName="allowComments"></label>
+      </div>
+
+      <div *ngIf="!percentualConcluido else uploadDiv"> <!--Se não tiver percentual ainda carregando aparecerá essa div-->
+        <button [disabled]="formularioAnimal.invalid" type="submit" class="btn btn-primary btn-block">Enviar</button> <!--Se não subi ainda nenhuma foto aparecerá esse botão.-->
+        <a routerLink="['animais']" class="btn btn-secondary btn-block">Cancelar</a>
+      </div>
+
+      <ng-template #uploadDiv>
+        <div class="text-center display-4">Percentual de upload {{percentualConcluido}} %</div>
+      </ng-template>
+
+    </div>
+  </form>
+</div>

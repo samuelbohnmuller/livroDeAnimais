@@ -1,0 +1,17 @@
+<h4 class="text-center">Login</h4>
+
+<form class="form mt-4" (ngSubmit)="logar()" #loginForm="ngForm" > <!--Evento de submit que chama método logar do componente login. ngForm é usado no estado do formulário inteiro.-->
+  <div class="form-group">
+    <input class="form-control mt-2" placeholder="Nome do usuário" [(ngModel)]="usuario" name="usuario" #campoUsuario="ngModel" required> <!--Mapeio o input para o atributo e crio nova variável(#campoUsuario) com valor do input preenchido e digo que ela é obrigatória(required).-->
+    <app-mensagem *ngIf="campoUsuario.invalid && campoUsuario.touched" mensagem="Usuário obrigatório"></app-mensagem> <!--Invoco o componente de mensagem e passo para ele valor no atributo mensagem. Verifica se o input acima foi preenchido-->
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control mt-2" placeholder="Senha" [(ngModel)]="senha" name="senha" #campoSenha="ngModel" required>
+    <app-mensagem *ngIf="campoSenha.invalid && campoSenha.touched" mensagem="Senha obrigatório"></app-mensagem> <!--Se o usuário tocou no campo e não preencheu(.touched).-->
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-block mt-2" [disabled]="loginForm.invalid">Entrar</button> <!--Se o formulário estiver inválido, o botão será desabilitado.-->
+</form>
+
+<p>Não é usuário?<a [routerLink]="['novousuario']">Se cadastre</a></p> <!--Link que aponta para uma rota-->

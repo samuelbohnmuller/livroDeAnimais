@@ -1,0 +1,8 @@
+<div [ngClass]="{'active-menu': mostraMenu}"> <!--Aparecer a classe CSS se a variável for true-->
+  <div class="menu-bar">
+    <i class="fa fa-window-close" (click)="abreMenu()"></i> <!--Quando clica no ícone abre o menú.-->
+    <ng-content></ng-content> <!--Para chamar um conteúdo dentro de outro usa-se o ng-content.-->
+  </div>
+
+  <div class="overlay" (click)="abreMenu()"></div>
+</div>

@@ -1,0 +1,30 @@
+<header class="sticky-top">
+  <nav class="navbar navbar-light bg-white">
+    <a class="navbar-brand">
+      <i class="fa fa-bars mr-2" (click)="menu.abreMenu()"></i> <!--Quando clic no ícone, abre o menu.-->
+    Livro de animais
+    </a>
+      
+    <app-menu #menu> <!--Instancio o menu aqui. #menu para ser usado em outro cxomponente dessa tela, como no evento de click acima.-->
+      <ul class="list-unstyled">
+        <li>
+          <a [routerLink]="['animais', 'novo']">Novo Animal</a> <!--Link que manda pra rota do componente 'novo'-->
+        </li>
+      </ul>
+    </app-menu>
+
+    <div *ngIf="user$ | async as user"> <!--Pega a informação da variável de usuário do componente e faz um subscribe do observable(do tipo usuário) e coloca em variável user.-->
+      <div *ngIf="user.name else login"> <!--Se o nome do usuário existir, executará as linhas abaixo, se não, executará o template #login.-->
+        <i class="fa fa-user-circle mr-1"></i> <!--i é o ícone de usuário.-->
+        <a class="mr-1">{{user.name}}</a> <!--user contém os atributos da interface Usuario.-->
+        <a (click)="logout()">Logout</a> <!--Chama método através de evento de click-->
+      </div>
+    </div>
+  </nav>
+
+  <ng-template #login>
+    <span class="navbar-text">
+      <a [routerLink]="['']">Login</a>
+    </span>
+  </ng-template> <!--login é o nome do template.-->
+</header>
